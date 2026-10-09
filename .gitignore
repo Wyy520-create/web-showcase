@@ -1,0 +1,9 @@
+# node_modules
+node_modules/
+dist/
+.next/
+out/
+
+# 系统与编辑器
+.DS_Store
+*.log

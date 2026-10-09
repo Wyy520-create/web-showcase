@@ -1,0 +1,237 @@
+/* ===== 拾遗：宣纸 × 墨 × 朱砂 ===== */
+:root {
+  --paper: #f2ede3;
+  --ink: #1c1812;
+  --ink-soft: #4a4234;
+  --cinnabar: #a63a2b;
+  --fade: rgba(28, 24, 18, .08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", serif;
+  line-height: 2;
+}
+
+/* 水墨粒子背景 */
+.ink-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+main { position: relative; z-index: 1; }
+
+/* ===== 卷首 ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+.hero-kicker {
+  font-size: .78rem;
+  letter-spacing: .55em;
+  text-indent: .55em;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+}
+/* 书法描边动画：stroke-dash 沿字形轮廓走一遍 */
+.calligraphy { width: min(560px, 88vw); height: auto; }
+.calligraphy text {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "TW-Kai", serif;
+  font-size: 240px;
+  fill: transparent;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: draw 4.5s ease forwards .3s, fillIn 1.6s ease forwards 3.4s;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fillIn { to { fill: var(--ink); } }
+
+.hero-sub {
+  margin-top: 1.8rem;
+  font-size: 1.05rem;
+  letter-spacing: .3em;
+  color: var(--ink-soft);
+}
+.hero-rule {
+  margin-top: 2.6rem;
+  width: min(420px, 70vw);
+  border-top: 1px solid var(--fade);
+  position: relative;
+  text-align: center;
+}
+.hero-rule i {
+  position: relative;
+  top: -.95em;
+  background: var(--paper);
+  padding: 0 1.2rem;
+  font-style: normal;
+  font-size: .8rem;
+  letter-spacing: .5em;
+  color: var(--cinnabar);
+}
+.hero-scroll {
+  margin-top: 3rem;
+  font-size: .85rem;
+  letter-spacing: .4em;
+  color: var(--ink-soft);
+  animation: sink 2.4s ease-in-out infinite;
+}
+@keyframes sink {
+  0%, 100% { transform: translateY(0); opacity: .8; }
+  50% { transform: translateY(8px); opacity: .35; }
+}
+
+/* ===== 三幕：卷轴展开 ===== */
+.act {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem;
+  position: relative;
+}
+.act-no {
+  position: absolute;
+  top: 8vh;
+  left: clamp(1rem, 6vw, 6rem);
+  font-family: Georgia, serif;
+  font-size: 4.6rem;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--fade);
+  line-height: 1;
+}
+
+/* 卷轴：上下木杆 + 宣纸展开 */
+.scroll-frame { width: min(980px, 100%); }
+.rod {
+  height: 16px;
+  border-radius: 8px;
+  background: linear-gradient(#3a2e20, #241b11);
+  box-shadow: 0 4px 10px rgba(28, 24, 18, .35);
+  position: relative;
+  z-index: 2;
+}
+.rod::before, .rod::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  width: 10px;
+  height: 12px;
+  border-radius: 5px;
+  background: var(--cinnabar);
+}
+.rod::before { left: -6px; }
+.rod::after { right: -6px; }
+
+.parchment {
+  background:
+    linear-gradient(90deg, rgba(28,24,18,.06), transparent 6%, transparent 94%, rgba(28,24,18,.06)),
+    linear-gradient(#f7f2e7, #efe8d8);
+  border-left: 1px solid var(--fade);
+  border-right: 1px solid var(--fade);
+  padding: 3.5rem clamp(1.6rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  align-items: center;
+  /* 初始收起，.revealed 时纵向展开 */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.4s cubic-bezier(.22, .8, .3, 1);
+}
+.revealed .parchment { clip-path: inset(0 0 0% 0); }
+
+.glyph {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", serif;
+  font-size: clamp(9rem, 22vw, 15rem);
+  line-height: 1.1;
+  text-align: center;
+  /* 青铜绿锈 / 青瓷 / 琴木 三色，逐幕用 nth-child 覆盖 */
+  color: #3d5c4f;
+  text-shadow: 0 14px 30px rgba(28, 24, 18, .18);
+}
+.act:nth-of-type(2) .glyph { color: #5e7d6a; }
+.act:nth-of-type(3) .glyph { color: #6b4a2f; }
+.act:nth-of-type(4) .glyph { color: #41392c; }
+
+.act-era {
+  font-size: .8rem;
+  letter-spacing: .5em;
+  color: var(--cinnabar);
+}
+.act-text h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: .3em;
+  font-weight: 700;
+  margin-top: .6rem;
+}
+.act-text h3 {
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: .2em;
+  color: var(--ink-soft);
+  margin-top: .5rem;
+}
+.story {
+  margin-top: 1.6rem;
+  text-align: justify;
+  color: var(--ink-soft);
+  max-width: 34em;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 1s ease .7s, transform 1s ease .7s;
+}
+.revealed .story { opacity: 1; transform: none; }
+
+/* 朱砂印章 */
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-top: 1.8rem;
+  background: var(--cinnabar);
+  color: #f7f2e7;
+  font-size: 1.3rem;
+  font-family: "Kaiti SC", "KaiTi", serif;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(166, 58, 43, .4);
+  transform: rotate(-4deg);
+  opacity: 0;
+  transition: opacity .8s ease 1.2s;
+}
+.revealed .seal { opacity: 1; }
+
+/* ===== 卷尾 ===== */
+.epilogue {
+  padding: 8rem 1.5rem 5rem;
+  text-align: center;
+}
+.ep-line {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: .4em;
+  font-weight: 700;
+}
+.ep-note {
+  margin-top: 2rem;
+  font-size: .78rem;
+  letter-spacing: .2em;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 760px) {
+  .parchment { grid-template-columns: 1fr; gap: 1.4rem; text-align: center; }
+  .story { margin-left: auto; margin-right: auto; }
+}

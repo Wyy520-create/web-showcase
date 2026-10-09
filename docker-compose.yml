@@ -1,0 +1,37 @@
+# web-showcase · 五站编排
+# 一条命令构建并启动全部五个站点，端口 3101-3105
+services:
+  event-horizon:
+    build: sites/event-horizon
+    container_name: showcase-event-horizon
+    ports:
+      - "3101:80"
+    restart: unless-stopped
+
+  shiyi:
+    build: sites/shiyi
+    container_name: showcase-shiyi
+    ports:
+      - "3102:80"
+    restart: unless-stopped
+
+  waveform:
+    build: sites/waveform
+    container_name: showcase-waveform
+    ports:
+      - "3103:80"
+    restart: unless-stopped
+
+  fahrenheit:
+    build: sites/fahrenheit
+    container_name: showcase-fahrenheit
+    ports:
+      - "3104:80"
+    restart: unless-stopped
+
+  glasshouse:
+    build: sites/glasshouse
+    container_name: showcase-glasshouse
+    ports:
+      - "3105:80"
+    restart: unless-stopped

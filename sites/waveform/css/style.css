@@ -1,0 +1,215 @@
+/* ===== Waveform · 声验室 ===== 深色实验室风格，霓虹青 × 电紫 */
+:root {
+  --bg: #07090f;
+  --panel: #0d1119;
+  --line: #1c2433;
+  --neon: #00f0ff;
+  --violet: #a06bff;
+  --text: #d8e1f0;
+  --dim: #7c8aa5;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  line-height: 1.7;
+}
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0, 240, 255, .10), transparent 70%),
+    repeating-linear-gradient(0deg, transparent 0 39px, rgba(0, 240, 255, .045) 39px 40px),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgba(0, 240, 255, .045) 39px 40px);
+}
+.hero-tag {
+  font-family: var(--mono);
+  letter-spacing: .5em;
+  font-size: .8rem;
+  color: var(--neon);
+  margin-bottom: 1.4rem;
+}
+.hero-title {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.hero-title-en {
+  display: block;
+  font-family: var(--mono);
+  font-size: clamp(.9rem, 2vw, 1.2rem);
+  font-weight: 400;
+  letter-spacing: 1.1em;
+  color: var(--violet);
+  margin-top: .8rem;
+  text-indent: 1.1em; /* 抵消末尾字距，保持视觉居中 */
+}
+.hero-sub {
+  max-width: 34em;
+  color: var(--dim);
+  margin: 1.6rem 0 2.4rem;
+}
+.hero-cta {
+  font-family: var(--mono);
+  color: var(--bg);
+  background: var(--neon);
+  text-decoration: none;
+  padding: .8rem 2.4rem;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: box-shadow .25s, transform .25s;
+}
+.hero-cta:hover { box-shadow: 0 0 32px rgba(0, 240, 255, .55); transform: translateY(-2px); }
+
+/* ===== 面板 ===== */
+.lab { max-width: 1080px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.8rem 1.8rem 2rem;
+  margin-top: 2rem;
+}
+.panel-head h2 {
+  font-size: 1.25rem;
+  letter-spacing: .08em;
+}
+.panel-head h2::before { content: "▍"; color: var(--neon); }
+.panel-head p { color: var(--dim); font-size: .92rem; margin-top: .3rem; }
+.panel-body { margin-top: 1.4rem; }
+
+/* ===== 信号发生器 ===== */
+.generator {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+.ctl { display: block; margin-bottom: 1.2rem; }
+.ctl > span { display: block; font-size: .88rem; color: var(--dim); margin-bottom: .4rem; }
+.ctl b { color: var(--neon); font-family: var(--mono); }
+input[type="range"] { width: 100%; accent-color: var(--neon); }
+
+.wave-btns { display: flex; flex-wrap: wrap; gap: .5rem; }
+.wave-btns button {
+  flex: 1 1 calc(50% - .5rem);
+  background: #131a26;
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: .5rem 0;
+  cursor: pointer;
+  font-size: .88rem;
+  transition: all .2s;
+}
+.wave-btns button.active {
+  color: var(--bg);
+  background: var(--neon);
+  border-color: var(--neon);
+  font-weight: 700;
+}
+
+.big-btn {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: .8rem 0;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: var(--bg);
+  background: linear-gradient(90deg, var(--neon), var(--violet));
+  transition: filter .2s, transform .2s;
+}
+.big-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+.big-btn.on { background: linear-gradient(90deg, #ff5f8f, #ff9a5f); }
+
+/* ===== 画布区 ===== */
+.scope-wrap { overflow: hidden; }
+canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #05070c;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.canvas-cap {
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .25em;
+  color: var(--dim);
+  margin-top: .55rem;
+  text-align: right;
+}
+
+/* ===== 钢琴 ===== */
+.piano {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  height: 180px;
+  user-select: none;
+}
+.wkey {
+  flex: 1;
+  background: linear-gradient(#f4f7fc, #c9d4e6);
+  border: 1px solid #8b98b0;
+  border-radius: 0 0 8px 8px;
+  color: #3a4763;
+  font-family: var(--mono);
+  font-size: .8rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  cursor: pointer;
+  transition: background .08s;
+}
+.wkey.down { background: linear-gradient(var(--neon), #7fd8ff); }
+.bkey {
+  position: absolute;
+  top: 0;
+  width: 6.5%;
+  height: 58%;
+  background: linear-gradient(#2a3345, #05070c);
+  border: 1px solid #000;
+  border-radius: 0 0 6px 6px;
+  color: #9fb0cc;
+  font-family: var(--mono);
+  font-size: .68rem;
+  z-index: 2;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  transition: background .08s;
+}
+.bkey.down { background: linear-gradient(var(--violet), #6a3fd4); }
+.hint { color: var(--dim); font-size: .88rem; margin-top: 1rem; text-align: center; }
+
+.foot {
+  text-align: center;
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: .78rem;
+  padding: 2.4rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 760px) {
+  .generator { grid-template-columns: 1fr; }
+  .piano { height: 130px; }
+}

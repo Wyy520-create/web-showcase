@@ -1,0 +1,146 @@
+/* ===== 事件视界：深空排版 · 暖橙点缀 · 衬线大标题 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #020204;
+  color: #e8e2d5;
+  font-family: "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+}
+
+/* 3D 画布固定铺满，文字层在它上面滚动 */
+.canvas-wrap { position: fixed; inset: 0; z-index: 0; }
+.overlay { position: relative; z-index: 1; }
+
+/* 顶部与底部渐隐遮罩，让文字可读性更好 */
+.overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 2, 4, .82) 0%, transparent 26%, transparent 62%, rgba(2, 2, 4, .86) 100%);
+  pointer-events: none;
+}
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+.hero-kicker {
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+  font-size: .75rem;
+  letter-spacing: .6em;
+  text-indent: .6em;
+  color: #c98d4e;
+  margin-bottom: 1.6rem;
+}
+.hero-title {
+  font-size: clamp(3.2rem, 10vw, 7rem);
+  font-weight: 800;
+  letter-spacing: .3em;
+  text-indent: .3em;
+  text-shadow: 0 0 60px rgba(255, 170, 90, .35);
+}
+.hero-en {
+  font-family: "Didot", "Times New Roman", serif;
+  font-size: clamp(.85rem, 2vw, 1.15rem);
+  letter-spacing: 1em;
+  text-indent: 1em;
+  color: #c98d4e;
+  margin-top: 1.2rem;
+}
+.hero-hint { margin-top: 2.2rem; color: #9a917e; font-size: .92rem; letter-spacing: .25em; }
+.hero-arrow {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  color: #c98d4e;
+  animation: bob 2s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: .9; }
+  50% { transform: translateY(10px); opacity: .4; }
+}
+
+/* ===== 四幕 ===== */
+.act {
+  min-height: 120vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 1.5rem;
+}
+.act-inner {
+  max-width: 560px;
+  margin-left: clamp(1rem, 8vw, 9rem);
+  padding: 2.4rem 2.6rem;
+  background: rgba(4, 4, 8, .55);
+  border: 1px solid rgba(201, 141, 78, .28);
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .9);
+}
+.act:nth-child(odd) .act-inner { margin-left: auto; margin-right: clamp(1rem, 8vw, 9rem); }
+
+.act-no {
+  font-size: .78rem;
+  letter-spacing: .5em;
+  color: #c98d4e;
+  margin-bottom: 1rem;
+}
+.act-title {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: .18em;
+  line-height: 1.3;
+}
+.act-en {
+  font-family: "Didot", serif;
+  font-size: .8rem;
+  letter-spacing: .45em;
+  color: #9a917e;
+  margin: .7rem 0 1.4rem;
+}
+.act-text {
+  color: #cfc7b4;
+  line-height: 2.1;
+  text-align: justify;
+}
+.act-top {
+  margin-top: 1.8rem;
+  background: none;
+  border: 1px solid #c98d4e;
+  color: #e8d9bd;
+  font-family: inherit;
+  font-size: .88rem;
+  letter-spacing: .2em;
+  padding: .7rem 1.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .25s, color .25s;
+}
+.act-top:hover { background: #c98d4e; color: #1a1206; }
+
+.act-last { min-height: 100vh; }
+
+.foot {
+  padding: 3rem 1.5rem 3.4rem;
+  text-align: center;
+  font-size: .76rem;
+  letter-spacing: .12em;
+  color: #6d6654;
+  line-height: 2.2;
+}
+
+@media (max-width: 640px) {
+  .act-inner, .act:nth-child(odd) .act-inner {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.8rem 1.5rem;
+  }
+}

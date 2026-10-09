@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waveform · 声验室 — 看得见的声音</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ========== Hero ========== -->
+  <header class="hero">
+    <p class="hero-tag">SIGNAL · SPECTRUM · SYNTHESIS</p>
+    <h1 class="hero-title">声验室<span class="hero-title-en">WAVEFORM</span></h1>
+    <p class="hero-sub">声音是看不见的波。这里用 Web Audio API 把它画出来 —— 生成信号、拆解频谱、敲键成曲。</p>
+    <a class="hero-cta" href="#lab">进入实验室 ↓</a>
+  </header>
+
+  <!-- ========== 实验区 ========== -->
+  <main id="lab" class="lab">
+
+    <!-- 信号发生器 + 示波器 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>01 · 信号发生器</h2>
+        <p>合成一个纯净电信号，示波器实时描绘它的波形。</p>
+      </div>
+      <div class="panel-body generator">
+        <div class="controls">
+          <label class="ctl">
+            <span>频率 <b id="freqLabel">440 Hz</b></span>
+            <input id="freq" type="range" min="20" max="2000" value="440" step="1" />
+          </label>
+          <div class="ctl">
+            <span>波形</span>
+            <div class="wave-btns" id="waveBtns">
+              <button data-wave="sine" class="active">正弦</button>
+              <button data-wave="square">方波</button>
+              <button data-wave="sawtooth">锯齿</button>
+              <button data-wave="triangle">三角</button>
+            </div>
+          </div>
+          <button id="toggle" class="big-btn">▶ 播放信号</button>
+        </div>
+        <div class="scope-wrap">
+          <canvas id="scope" width="720" height="300"></canvas>
+          <p class="canvas-cap">OSCILLOSCOPE · 时域波形</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 频谱 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>02 · 频谱分析</h2>
+        <p>任何声音都被拆成一组频率成分 —— 上面是频域，上面是示波器是时域。</p>
+      </div>
+      <div class="panel-body">
+        <div class="scope-wrap">
+          <canvas id="spectrum" width="1080" height="320"></canvas>
+          <p class="canvas-cap">SPECTRUM · 频域能量分布</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 键盘琴 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>03 · 键盘琴</h2>
+        <p>用电脑键盘弹奏：白键 A S D F G H J K，黑键 W E T Y U。或直接点击琴键。</p>
+      </div>
+      <div class="panel-body">
+        <div class="piano" id="piano"></div>
+        <p class="hint" id="lastKey">按任意琴键发声，波形与频谱同步联动。</p>
+      </div>
+    </section>
+
+    <!-- 麦克风 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>04 · 看见自己的声音</h2>
+        <p>授权麦克风后，对着电脑说话 —— 你的声音被实时画成波形与频谱。</p>
+      </div>
+      <div class="panel-body">
+        <button id="micBtn" class="big-btn">🎙 开启麦克风</button>
+        <p class="hint" id="micHint">麦克风数据仅在本地处理，不会上传。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>WAVEFORM · 声验室 — Web Audio API / Canvas · 纯原生实现，零依赖</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
